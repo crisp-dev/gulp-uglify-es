@@ -10,7 +10,6 @@ gulpfile.js
 let gulp = require("gulp");
 let rename = require("gulp-rename");
 let uglify = require('gulp-uglify-es').default;
-// Or: import uglify from "gulp-uglify-es";
 
 gulp.task("uglify", function () {
 	return gulp.src("lib/bundle.js")
