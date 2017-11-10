@@ -11,23 +11,6 @@ let paths = {
 	dest: "./lib",
 };
 
-gulp.task("test", () => {
-	let uglify = require("./lib/index.js").default;
-	let gutil = require("gulp-util");
-	let rename = require("gulp-rename");
-
-	return gulp.src("test/bundle.js")
-		.pipe(uglify())
-		.pipe(rename("bundle.min.js"))
-		.pipe(gutil.buffer(function (err, files) {
-			let bundleString = files[0].contents.toString();
-			// console.log(files[0].path)
-			// console.log(bundleString);
-
-			if (bundleString.indexOf(`function(e,o)`) < 0) throw "Failed.";
-		}));
-});
-
 gulp.task("build", function () {
 	let tsProject = ts.createProject(paths.tsconfig, { declaration: true });
 

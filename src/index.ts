@@ -5,7 +5,11 @@ const Uglify = require("uglify-es");
 export default function plugin(options?: any): Transform {
     return ObjectStream.transform({
         onEntered: (args: EnteredArgs<gutil.File, gutil.File>) => {
-            let result = Uglify.minify(args.object.contents.toString() as string, options);
+			if(!args.object.contents){
+				throw new Error(`Invalid file with path: ${args.object.path}. The file has no contents.`);
+			}
+
+			let result = Uglify.minify(args.object.contents.toString() as string, options);
 
             if (result.error) {
                 throw result.error;
