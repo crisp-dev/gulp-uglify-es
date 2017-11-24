@@ -1,4 +1,4 @@
-# gulp-ts-package
+# gulp-uglify-es
 gulp stream to uglify with 'uglify-es' (es6 supported).
 
 ## Install
