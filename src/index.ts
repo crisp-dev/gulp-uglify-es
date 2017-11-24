@@ -9,7 +9,7 @@ export default function plugin(options?: any): Transform {
 				throw new Error(`Invalid file with path: ${args.object.path}. The file has no contents.`);
 			}
 
-			let result = Uglify.minify(args.object.contents.toString() as string, options);
+			let result = Uglify.minify(args.object.contents.toString(), options);
 
             if (result.error) {
                 throw result.error;
