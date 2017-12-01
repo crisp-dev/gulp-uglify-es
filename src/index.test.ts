@@ -38,10 +38,7 @@ export default function (suite: TestSuite): void {
 	});
 
 	suite.describe("When created with source-map", suite => {
-		suite.test("Test source maps are created.", test => {
-
-			// Finish this test. Add to README. Publish. Comment and close issue.
-
+		suite.test("Test source maps are created in external file.", test => {
 			test.arrange();
 			let inStream = ObjectStream.transform({});
 
@@ -62,6 +59,27 @@ export default function (suite: TestSuite): void {
 			expect(outStream.read()).to.be.null;
 			expect(actual.contents.toString()).to.equal(FILE_TEXT_UGLIFIED + sourceMapString);
 			expect(maps.contents.toString().length).to.be.greaterThan(0);
+		});
+
+		suite.test("Test source maps are created inline.", test => {
+			test.arrange();
+			let inStream = ObjectStream.transform({});
+
+			let outStream = inStream
+				.pipe(sourcemaps.init())
+				.pipe(plugin())
+				.pipe(sourcemaps.write()) as Transform;
+
+			let file = createGulpTextFile(FILE_TEXT);
+
+			test.act();
+			inStream.write(file);
+			let actual: gutil.File = outStream.read();
+
+			test.assert();
+			const sourceMapString = "\n//# sourceMappingURL=data:application/json;charset=utf8;base64";
+			expect(outStream.read()).to.be.null;
+			expect(actual.contents!.toString().startsWith(FILE_TEXT_UGLIFIED + sourceMapString)).to.true;
 		});
 	});
 }
