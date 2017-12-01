@@ -1,23 +1,56 @@
 import ObjectStream, { EnteredArgs, EndedArgs, Transform } from "o-stream";
 import * as gutil from "gulp-util";
 const Uglify = require("uglify-es");
+const applySourceMap = require("vinyl-sourcemaps-apply");
 
-export default function plugin(options?: any): Transform {
-    return ObjectStream.transform({
-        onEntered: (args: EnteredArgs<gutil.File, gutil.File>) => {
-			if(!args.object.contents){
-				throw new Error(`Invalid file with path: ${args.object.path}. The file has no contents.`);
+const PLUGIN_NAME = "gulp-uglify-es";
+
+export default function plugin(uglifyOptions?: any): Transform {
+return ObjectStream.transform({
+		onEntered: (args: EnteredArgs<gutil.File, gutil.File>) => {
+			let file = args.object;
+
+            throwIfStream(file);
+
+			if (file.isNull() || !file.contents) {
+				args.output.push(file);
+				return;
 			}
 
-			let result = Uglify.minify(args.object.contents.toString(), options);
+			if (file.sourceMap) {
+                uglifyOptions = setUglifySourceMapOptions(uglifyOptions, file);
+			}
 
-            if (result.error) {
-                throw result.error;
-            }
+			let result = Uglify.minify(file.contents.toString(), uglifyOptions);
 
-            args.object.contents = new Buffer(result.code);
+			if (result.error) {
+				throw new gutil.PluginError(PLUGIN_NAME, result.error);
+			}
 
-            args.output.push(args.object);
-        }
-    });
+			file.contents = new Buffer(result.code);
+
+			if (result.map) {
+				applySourceMap(file, JSON.parse(result.map));
+			}
+
+			args.output.push(file);
+		}
+	});
+}
+
+function setUglifySourceMapOptions(uglifyOptions: any, file: gutil.File) {
+    uglifyOptions = uglifyOptions || {};
+    uglifyOptions.sourceMap = uglifyOptions.sourceMap || {};
+	let sourceMap = uglifyOptions.sourceMap;
+	
+    sourceMap.filename = file.sourceMap.file;
+	sourceMap.url = undefined;
+	
+    return uglifyOptions;
+}
+
+function throwIfStream(file: gutil.File) {
+    if (file.isStream()) {
+        throw new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.');
+    }
 }
