@@ -6,11 +6,11 @@ const applySourceMap = require("vinyl-sourcemaps-apply");
 const PLUGIN_NAME = "gulp-uglify-es";
 
 export default function plugin(uglifyOptions?: any): Transform {
-return ObjectStream.transform({
+	return ObjectStream.transform({
 		onEntered: (args: EnteredArgs<gutil.File, gutil.File>) => {
 			let file = args.object;
 
-            throwIfStream(file);
+			throwIfStream(file);
 
 			if (file.isNull() || !file.contents) {
 				args.output.push(file);
@@ -18,10 +18,13 @@ return ObjectStream.transform({
 			}
 
 			if (file.sourceMap) {
-                uglifyOptions = setUglifySourceMapOptions(uglifyOptions, file);
+				uglifyOptions = setUglifySourceMapOptions(uglifyOptions, file);
 			}
 
-			let result = Uglify.minify(file.contents.toString(), uglifyOptions);
+			let fileMap: any = {};
+			fileMap[file.relative] = file.contents.toString();
+
+			let result = Uglify.minify(fileMap, uglifyOptions);
 
 			if (result.error) {
 				throw new gutil.PluginError(PLUGIN_NAME, result.error);
@@ -39,18 +42,28 @@ return ObjectStream.transform({
 }
 
 function setUglifySourceMapOptions(uglifyOptions: any, file: gutil.File) {
-    uglifyOptions = uglifyOptions || {};
-    uglifyOptions.sourceMap = uglifyOptions.sourceMap || {};
+	uglifyOptions = uglifyOptions || {};
+	uglifyOptions.sourceMap = uglifyOptions.sourceMap || {};
 	let sourceMap = uglifyOptions.sourceMap;
-	
-    sourceMap.filename = file.sourceMap.file;
-	sourceMap.url = undefined;
-	
-    return uglifyOptions;
+
+	// console.log(file.sourceMap);
+	sourceMap.filename = file.sourceMap.file;
+	sourceMap.includeSources = true;
+
+	if (sourceMap.url !== undefined) {
+		sourceMap.url = undefined;
+		console.warn("Uglify options.sourceMap.url should not be set. Deleting it.");
+	}
+
+	if (file.sourceMap.mappings) {
+		sourceMap.content = file.sourceMap;
+	}
+
+	return uglifyOptions;
 }
 
 function throwIfStream(file: gutil.File) {
-    if (file.isStream()) {
-        throw new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.');
-    }
+	if (file.isStream()) {
+		throw new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.');
+	}
 }
