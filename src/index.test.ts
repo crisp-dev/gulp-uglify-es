@@ -68,7 +68,7 @@ export default function (suite: TestSuite): void {
 			expect(map.file).to.equal("../" + FILE_MIN_PATH);
 			expect(map.sourcesContent[0]).to.equal(FILE_TEXT);
 		});
-
+		
 		suite.test("Test source maps are created inline.", test => {
 			test.arrange();
 			let inStream = ObjectStream.transform({});

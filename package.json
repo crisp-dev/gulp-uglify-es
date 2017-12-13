@@ -1,6 +1,6 @@
 {
 	"name": "gulp-uglify-es",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": "gulp stream to uglify with 'uglify-es' (es6 supported).",
 	"main": "./lib/index.js",
 	"typings": "./lib/index.d.ts",
@@ -13,7 +13,6 @@
 	},
 	"author": {
 		"name": "Itay Ronen",
-		"email": "",
 		"url": "https://gitlab.com/itayronen/gulp-uglify-es"
 	},
 	"homepage": "https://gitlab.com/itayronen/gulp-uglify-es",

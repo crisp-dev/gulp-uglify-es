@@ -50,7 +50,7 @@ function setUglifySourceMapOptions(uglifyOptions: any, file: gutil.File) {
 	sourceMap.filename = file.sourceMap.file;
 	sourceMap.includeSources = true;
 
-	if (sourceMap.url !== undefined) {
+	if (sourceMap.url !== undefined && sourceMap.url !== null) {
 		sourceMap.url = undefined;
 		console.warn("Uglify options.sourceMap.url should not be set. Deleting it.");
 	}
