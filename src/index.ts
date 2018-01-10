@@ -1,14 +1,14 @@
 import ObjectStream, { EnteredArgs, EndedArgs, Transform } from "o-stream";
+import * as File from "vinyl";
 const Uglify = require("uglify-es");
 const applySourceMap = require("vinyl-sourcemaps-apply");
 const PluginError = require("plugin-error");
-const Vinyl = require("vinyl");
 
 const PLUGIN_NAME = "gulp-uglify-es";
 
 export default function plugin(uglifyOptions?: any): Transform {
 	return ObjectStream.transform({
-		onEntered: (args: EnteredArgs<Vinyl, Vinyl>) => {
+		onEntered: (args: EnteredArgs<File, File>) => {
 			let file = args.object;
 
 			throwIfStream(file);
@@ -42,7 +42,7 @@ export default function plugin(uglifyOptions?: any): Transform {
 	});
 }
 
-function setUglifySourceMapOptions(uglifyOptions: any, file: Vinyl) {
+function setUglifySourceMapOptions(uglifyOptions: any, file: File) {
 	uglifyOptions = uglifyOptions || {};
 	uglifyOptions.sourceMap = uglifyOptions.sourceMap || {};
 	let sourceMap = uglifyOptions.sourceMap;
@@ -63,7 +63,7 @@ function setUglifySourceMapOptions(uglifyOptions: any, file: Vinyl) {
 	return uglifyOptions;
 }
 
-function throwIfStream(file: Vinyl) {
+function throwIfStream(file: File) {
 	if (file.isStream()) {
 		throw new PluginError(PLUGIN_NAME, 'Streams are not supported.');
 	}

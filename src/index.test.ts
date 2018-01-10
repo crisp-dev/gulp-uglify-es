@@ -3,7 +3,7 @@ import { expect } from "chai";
 import ObjectStream, { Transform } from "o-stream";
 import plugin from "./index";
 import * as sourcemaps from "gulp-sourcemaps";
-const Vinyl = require("vinyl");
+import * as File from "vinyl";
 
 const FILE_PATH = "bundle.js";
 const FILE_MIN_PATH = "bundle.min.js";
@@ -28,7 +28,7 @@ export default function (suite: TestSuite): void {
 	suite.test("When recieves a file without contents, then pass through.", test => {
 		test.arrange();
 		let stream = plugin();
-		let file = new Vinyl({ path: FILE_PATH, contents: null });
+		let file = new File({ path: FILE_PATH, contents: null });
 
 		test.act();
 		stream.write(file);
@@ -82,7 +82,7 @@ export default function (suite: TestSuite): void {
 
 			test.act();
 			inStream.write(file);
-			let actual: Vinyl = outStream.read();
+			let actual: File = outStream.read();
 
 			test.assert();
 			const sourceMapString = "\n//# sourceMappingURL=data:application/json;charset=utf8;base64";
@@ -92,8 +92,8 @@ export default function (suite: TestSuite): void {
 	});
 }
 
-function createGulpTextFile(text: string): Vinyl {
-	return new Vinyl({
+function createGulpTextFile(text: string): File {
+	return new File({
 		path: FILE_MIN_PATH,
 		contents: new Buffer(FILE_TEXT)
 	});
