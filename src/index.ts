@@ -1,13 +1,14 @@
 import ObjectStream, { EnteredArgs, EndedArgs, Transform } from "o-stream";
-import * as gutil from "gulp-util";
+import * as File from "vinyl";
 const Uglify = require("uglify-es");
 const applySourceMap = require("vinyl-sourcemaps-apply");
+const PluginError = require("plugin-error");
 
 const PLUGIN_NAME = "gulp-uglify-es";
 
 export default function plugin(uglifyOptions?: any): Transform {
 	return ObjectStream.transform({
-		onEntered: (args: EnteredArgs<gutil.File, gutil.File>) => {
+		onEntered: (args: EnteredArgs<File, File>) => {
 			let file = args.object;
 
 			throwIfStream(file);
@@ -27,7 +28,7 @@ export default function plugin(uglifyOptions?: any): Transform {
 			let result = Uglify.minify(fileMap, uglifyOptions);
 
 			if (result.error) {
-				throw new gutil.PluginError(PLUGIN_NAME, result.error);
+				throw new PluginError(PLUGIN_NAME, result.error);
 			}
 
 			file.contents = new Buffer(result.code);
@@ -41,7 +42,7 @@ export default function plugin(uglifyOptions?: any): Transform {
 	});
 }
 
-function setUglifySourceMapOptions(uglifyOptions: any, file: gutil.File) {
+function setUglifySourceMapOptions(uglifyOptions: any, file: File) {
 	uglifyOptions = uglifyOptions || {};
 	uglifyOptions.sourceMap = uglifyOptions.sourceMap || {};
 	let sourceMap = uglifyOptions.sourceMap;
@@ -62,8 +63,8 @@ function setUglifySourceMapOptions(uglifyOptions: any, file: gutil.File) {
 	return uglifyOptions;
 }
 
-function throwIfStream(file: gutil.File) {
+function throwIfStream(file: File) {
 	if (file.isStream()) {
-		throw new gutil.PluginError(PLUGIN_NAME, 'Streams are not supported.');
+		throw new PluginError(PLUGIN_NAME, 'Streams are not supported.');
 	}
 }
