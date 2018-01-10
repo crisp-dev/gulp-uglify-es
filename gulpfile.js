@@ -15,10 +15,15 @@ let paths = {
 gulp.task("build", function () {
 	let tsProject = ts.createProject(paths.tsconfig, { declaration: true });
 
-	let tsResult = gulp.src(paths.tsGlob, {read:false})
-		.pipe(read())
+	let tsResult = gulp.src(paths.tsGlob, { read: false })
 		.pipe(changed())
+		.pipe(read())
 		.pipe(tsProject());
+
+	tsResult.on("error", () => {
+		changed.reset();
+		throw "Typescript build failed.";
+	});
 
 	return merge([
 		tsResult.dts
