@@ -15,6 +15,10 @@
 		"name": "Itay Ronen",
 		"url": "https://gitlab.com/itayronen"
 	},
+	"repository": {
+		"type" : "git",
+		"url": "https://gitlab.com/itayronen/gulp-uglify-es.git"
+	},
 	"homepage": "https://gitlab.com/itayronen/gulp-uglify-es",
 	"license": "MIT",
 	"keywords": [
