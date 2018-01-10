@@ -1,6 +1,10 @@
 node_modules
-Backupper.parameters.txt
 lib
-npm-debug.log
+output
+dist
+bundles
+tmp
 .localStorage
+Backupper.parameters.txt
+npm-debug.log
 jsconfig.json
