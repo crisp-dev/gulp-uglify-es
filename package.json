@@ -16,7 +16,7 @@
 		"url": "https://gitlab.com/itayronen"
 	},
 	"repository": {
-		"type" : "git",
+		"type": "git",
 		"url": "https://gitlab.com/itayronen/gulp-uglify-es.git"
 	},
 	"homepage": "https://gitlab.com/itayronen/gulp-uglify-es",
@@ -51,7 +51,7 @@
 		"gulp-typescript": "^3.2.3",
 		"itay-gulp-changed": "^1.1.1",
 		"just-test-api": "^1.1.0",
-		"just-test-node": "^1.4.0",
+		"just-test-node": "^1.4.1",
 		"merge2": "^1.2.1",
 		"typescript": "^2.6.2"
 	}
