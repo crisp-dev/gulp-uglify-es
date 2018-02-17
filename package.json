@@ -1,6 +1,6 @@
 {
 	"name": "gulp-uglify-es",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "gulp stream to uglify with 'uglify-es' (es6 supported).",
 	"main": "./lib/index.js",
 	"typings": "./lib/index.d.ts",
@@ -34,13 +34,13 @@
 	},
 	"dependencies": {
 		"o-stream": "^0.2.2",
-		"plugin-error": "^0.1.2",
-		"uglify-es": "^3.2.0",
+		"plugin-error": "^1.0.1",
+		"uglify-es": "^3.3.9",
 		"vinyl": "^2.1.0",
 		"vinyl-sourcemaps-apply": "^0.2.1"
 	},
 	"devDependencies": {
-		"@types/chai": "^4.1.0",
+		"@types/chai": "^4.1.2",
 		"@types/gulp-sourcemaps": "0.0.32",
 		"@types/plugin-error": "^0.1.0",
 		"@types/vinyl": "^2.0.2",
@@ -49,12 +49,12 @@
 		"gulp": "^3.9.1",
 		"gulp-read": "0.0.1",
 		"gulp-rename": "^1.2.2",
-		"gulp-sourcemaps": "^2.6.3",
-		"gulp-typescript": "^3.2.3",
+		"gulp-sourcemaps": "^2.6.4",
+		"gulp-typescript": "^4.0.1",
 		"itay-gulp-changed": "^1.1.1",
 		"just-test-api": "^1.1.0",
 		"just-test-node": "^1.4.1",
 		"merge2": "^1.2.0",
-		"typescript": "^2.6.2"
+		"typescript": "^2.7.2"
 	}
 }
