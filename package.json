@@ -1,6 +1,6 @@
 {
 	"name": "gulp-uglify-es",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "gulp stream to uglify with 'terser' (es6 supported).",
 	"main": "./lib/index.js",
 	"typings": "./lib/index.d.ts",
