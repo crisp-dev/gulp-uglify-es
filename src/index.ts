@@ -1,7 +1,7 @@
 import ObjectStream, { EnteredArgs, EndedArgs, Transform } from "o-stream";
 import * as File from "vinyl";
 import * as PluginError from "plugin-error";
-const Uglify = require("uglify-es");
+const Uglify = require("terser");
 const applySourceMap = require("vinyl-sourcemaps-apply");
 
 const PLUGIN_NAME = "gulp-uglify-es";

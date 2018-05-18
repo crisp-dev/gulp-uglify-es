@@ -1,5 +1,7 @@
 # gulp-uglify-es
-gulp stream to uglify with 'uglify-es' (es6 supported).
+gulp stream to uglify with 'terser' (es6 supported).
+
+terser is the new 'uglify-es'. uglify-es is no longer maintained.
 
 ## Install
 npm install --save-dev gulp-uglify-es
@@ -18,7 +20,7 @@ gulp.task("uglify", function () {
 		.pipe(gulp.dest("lib/"));
 });
 ```
-For documentation about the options-object, See [Uglify API Reference](https://www.npmjs.com/package/uglify-es#API_Reference).
+For documentation about the options-object, See the [Uglify API Reference](https://www.npmjs.com/package/terser#api-reference).
 
 ## Source maps
 To generate source maps, use [gulp-sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps).  
