@@ -24,6 +24,9 @@
 	"keywords": [
 		"minify",
 		"uglify",
+		"uglify-es",
+		"uglify-es6",
+		"terser",
 		"es",
 		"es6",
 		"gulp",
