@@ -1,6 +1,6 @@
 {
 	"name": "gulp-uglify-es",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "gulp stream to uglify with 'terser' (es6 supported).",
 	"main": "./lib/index.js",
 	"typings": "./lib/index.d.ts",
@@ -27,7 +27,7 @@
 		"es",
 		"es6",
 		"gulp",
-		"gulp plugin"
+		"gulpplugin"
 	],
 	"publishConfig": {
 		"registry": "https://registry.npmjs.org/"
