@@ -95,6 +95,6 @@ export default function (suite: TestSuite): void {
 function createGulpTextFile(text: string): File {
 	return new File({
 		path: FILE_MIN_PATH,
-		contents: new Buffer(FILE_TEXT)
+		contents: new Buffer(text)
 	});
 }
