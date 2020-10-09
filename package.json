@@ -38,7 +38,7 @@
 	"dependencies": {
 		"o-stream": "^0.2.2",
 		"plugin-error": "^1.0.1",
-		"terser": "^4.3.9",
+		"terser": "^5.3.4",
 		"vinyl": "^2.2.0",
 		"vinyl-sourcemaps-apply": "^0.2.1"
 	},
